@@ -1,0 +1,24 @@
+.header {
+    display: flex;
+    justify-content: flex-end;
+    height: 130px;
+    background-color: rgb(216, 216, 210);
+    border: 1px solid rgb(156, 156, 145);
+    box-shadow: 0px 8.7px 0px -5px rgba(0, 0, 0, 0.023), 0px 10.9px 0px -5px rgba(0, 0, 0, 0.036),
+        0px 12.8px 0px -5px rgba(0, 0, 0, 0.048), 0px 15px 0px -5px rgba(0, 0, 0, 0.06);
+    .header_profile_container {
+        margin: 10px;
+        background-color: rgba(238, 238, 232, 0.507);
+        border-radius: 5px;
+        .header_name {
+            text-align: start;
+            border-bottom: 1px solid rgb(156, 156, 145);
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+        .logout_bnt_container {
+            display: flex;
+            justify-content: center;
+        }
+    }
+}

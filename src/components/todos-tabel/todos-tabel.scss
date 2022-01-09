@@ -1,0 +1,46 @@
+.todos-tabel {
+    display: flex;
+    position: relative;
+    min-height: calc(100% - 130px);
+    max-height: calc(100% - 130px);
+    overflow: hidden;
+    .todo-add {
+        position: absolute;
+        right: 30px;
+        bottom: 30px;
+        z-index: 999;
+    }
+    .btn_icon {
+        font-size: 30px;
+    }
+    .card {
+        flex: 11 30%;
+        background-color: rgba(255, 255, 255, 0.336);
+        margin: 10px;
+        overflow: hidden;
+        box-shadow: 7px 7px 14px #bdbdbd, -7px -7px 14px #ffffff;
+        min-height: 100%;
+        h2 {
+            text-transform: capitalize;
+            text-align: center;
+        }
+        .status_body {
+            height: auto;
+            overflow: auto;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgb(156, 156, 145);
+            border: 4px solid transparent;
+            background-clip: content-box;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: whitesmoke;
+            border: 1px solid rgb(197, 197, 197);
+        }
+    }
+}

@@ -1,0 +1,37 @@
+.authentication_block {
+    width: 30vw;
+    border-radius: 5px;
+    background-color: beige;
+    min-width: 280px;
+}
+.authentication_title {
+    padding: 10px 20px;
+    font-size: 30px;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.377);
+}
+.authentication_form {
+    padding: 20px;
+    .form_group {
+        position: relative;
+    }
+}
+.form_login__section {
+    width: 100%;
+    &:not(:last-child) {
+        margin-bottom: 10px;
+    }
+    label,
+    input {
+        display: block;
+    }
+    input {
+        padding: 5px 10px;
+    }
+}
+.error {
+    position: absolute;
+    left: 10px;
+    color: red;
+    font-size: 12px;
+}
