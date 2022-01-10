@@ -1,18 +1,28 @@
 import React from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { Form, Modal } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
+import { authAPI } from '../../api/api'
+import { modalShow } from '../../actions/modal'
+import { logIn } from '../../actions/profile'
+import { alertText } from '../../actions/alertAction'
 
 import './authentication-form.scss'
 
 function AuthenticationForm() {
+    const state = useSelector(state => state);
+    const { modalReducer: { isShow } } = state;
+    const { alertTextReducer: { message } } = state
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailDirty, setEmailDirty] = useState(false);
     const [passwordDirty, setPasswordDirty] = useState(false);
     const [emailError, setEmailError] = useState("Email can't be empty");
     const [passwordError, setPasswordError] = useState("Password can't be empty");
-    const [validForm, setValidForm] = useState(false)
-
+    const [validForm, setValidForm] = useState(false);
 
     useEffect(() => {
         if (emailError || passwordError) {
@@ -20,7 +30,6 @@ function AuthenticationForm() {
         } else {
             setValidForm(true)
         }
-
     }, [emailError, passwordError])
 
     const blurHandler = (e) => {
@@ -57,45 +66,86 @@ function AuthenticationForm() {
     }
 
     const handleFormSubmit = (e) => {
-        // e.preventDefault()
+        e.preventDefault()
+        const data = ({
+            email: email,
+            password: password,
+        });
+        authAPI.authLogIn(data).then(responce => {
+            const { data } = responce;
+            dispatch(logIn(data));
+            navigate("/todos_page", { replace: true });
+            return responce.data
+        }).catch(error => {
+            if (error.responce) {
+                console.log(error.responce.data);
+                console.log(error.responce.status);
+            } else if (error.request) {
+                let message = JSON.parse(error.request.response);
+                showAlert(message);
+            } else {
+                console.log('Error', error.message);
+            }
+        }
+        )
     }
+
+    const showAlert = (text) => {
+        dispatch(alertText(text));
+        dispatch(modalShow(!isShow));
+        setTimeout(() => {
+            dispatch(modalShow(isShow));
+        }, 3000);
+    }
+
     return (
-        <Form className='authentication_block ' onSubmit={handleFormSubmit} >
-            <h3 className='authentication_title'>Sing In</h3>
-            <div className='authentication_form'>
-                <Form.Group className="mb-4 form_group" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control
-                        type="email"
-                        name='email'
-                        placeholder="Enter email"
-                        value={email}
-                        onBlur={e => blurHandler(e)}
-                        onChange={e => emailHandler(e)}
-                    />
-                    {(emailDirty && emailError) && <p className='error' >{emailError}</p>}
-                </Form.Group>
-                <Form.Group className="mb-4 form_group" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        name='password'
-                        placeholder="Password"
-                        value={password}
-                        onBlur={e => blurHandler(e)}
-                        onChange={e => passwordHandler(e)}
-                    />
-                    {(passwordDirty && passwordError) && <p className='error' >{passwordError}</p>}
-                </Form.Group>
-                <button
-                    className="btn btn-primary"
-                    type='submit'
-                    disabled={!validForm}
-                >
-                    Submit
-                </button>
-            </div>
-        </Form>
+        <>
+            <Form className='authentication_block ' onSubmit={handleFormSubmit} >
+                <h3 className='authentication_title'>Sing In</h3>
+                <div className='authentication_form'>
+                    <Form.Group className="mb-4 form_group" controlId="formBasicEmail">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control
+                            type="email"
+                            name='email'
+                            placeholder="Enter email"
+                            value={email}
+                            onBlur={e => blurHandler(e)}
+                            onChange={e => emailHandler(e)}
+                        />
+                        {(emailDirty && emailError) && <p className='error' >{emailError}</p>}
+                    </Form.Group>
+                    <Form.Group className="mb-4 form_group" controlId="formBasicPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            name='password'
+                            placeholder="Password"
+                            value={password}
+                            onBlur={e => blurHandler(e)}
+                            onChange={e => passwordHandler(e)}
+                        />
+                        {(passwordDirty && passwordError) && <p className='error' >{passwordError}</p>}
+                    </Form.Group>
+                    <button
+                        className="btn btn-primary"
+                        type='submit'
+                        disabled={!validForm}
+                    >
+                        Submit
+                    </button>
+                </div>
+            </Form>
+            <Modal
+                size="sm"
+                show={isShow}
+                aria-labelledby="example-modal-sizes-title-sm"
+            >
+                <Modal.Body className='alert_message'>{message}</Modal.Body>
+            </Modal>
+        </>
+
+
     )
 
 }

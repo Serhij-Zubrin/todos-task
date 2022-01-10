@@ -12,7 +12,6 @@ function TodosTabel() {
     const state = useSelector(state => state)
     const dispatch = useDispatch();
     const { modalReducer: { isShow } } = state
-    console.log(isShow);
     return (
         <div className='todos-tabel'>
             <Button variant="danger" className='todo-add' onClick={() => dispatch(modalShow(!isShow))}>

@@ -1,11 +1,11 @@
 import { LOG_IN, LOG_OUT } from "../constants/action-constants"
 
-export const logIn = (payload, callback) => ({
+export const logIn = (payload) => ({
     type: LOG_IN,
     payload,
-    callback
 })
 
-export const logOut = () => ({
+export const logOut = (payload) => ({
     type: LOG_OUT,
+    payload,
 })

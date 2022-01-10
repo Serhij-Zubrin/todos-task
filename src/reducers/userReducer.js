@@ -2,17 +2,25 @@ import { LOG_IN, LOG_OUT } from "../constants/action-constants"
 
 const initial_state = {
     email: '',
-    password: '',
     id: '',
-    isPassword: false
+    isPassword: false,
+    isAuth: false
 }
 
 export const userReducer = (state = initial_state, action) => {
     switch (action.type) {
         case LOG_IN:
-            return { ...state }
+            return {
+                ...state,
+                ...action.payload,
+                isAuth: true
+            }
         case LOG_OUT:
-            return state
+            return {
+                ...state,
+                ...action.payload,
+                isAuth: false
+            }
         default:
             return state
     }
