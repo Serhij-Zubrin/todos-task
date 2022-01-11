@@ -25,7 +25,7 @@ function Header() {
         <div div className='header' >
             <Toast className='header_profile_container'>
                 <Toast.Body>
-                    <span className="me-auto">{email}</span>
+                    <span className="me-auto header_name">{email}</span>
                 </Toast.Body>
                 <Toast.Body>
                     <Button

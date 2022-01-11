@@ -1,3 +1,3 @@
 import ModalTodo from "./modal-todo";
 
-export default ModalTodo
+export default ModalTodo;

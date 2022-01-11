@@ -1,19 +1,22 @@
-import { TODO_ADD, TODO_DELETE } from "../constants/action-constants";
+import { TODO_ADD, TODO_DELETE, TODOS_DOWNLOAD } from "../constants/action-constants";
 
-const initial_state = {
-    id: '',
-    title: '',
-    description: '',
-    status: 'planned',
-    backgroundColor: 'white',
-}
-
-export const todoReducer = (state = initial_state, action) => {
+export const todoReducer = (state = {}, action) => {
     switch (action.type) {
+        case TODOS_DOWNLOAD:
+            return {
+                ...state,
+                ...action.payload,
+            }
         case TODO_ADD:
-            return { ...state }
+            return {
+                ...state,
+                ...action.payload,
+            }
         case TODO_DELETE:
-            return { ...state }
+            return {
+                ...state,
+                ...action.payload,
+            }
         default:
             return state
     }

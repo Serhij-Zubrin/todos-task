@@ -30,7 +30,7 @@ function AuthenticationForm() {
         } else {
             setValidForm(true)
         }
-    }, [emailError, passwordError])
+    }, [emailError, passwordError]);
 
     const blurHandler = (e) => {
         switch (e.target.name) {
@@ -41,7 +41,7 @@ function AuthenticationForm() {
                 setPasswordDirty(true)
                 break
         }
-    }
+    };
 
     const emailHandler = (e) => {
         setEmail(e.target.value);
@@ -51,7 +51,7 @@ function AuthenticationForm() {
         } else {
             setEmailError('');
         }
-    }
+    };
 
     const passwordHandler = (e) => {
         setPassword(e.target.value.trim());
@@ -63,7 +63,7 @@ function AuthenticationForm() {
         } else {
             setPasswordError('');
         }
-    }
+    };
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
@@ -73,6 +73,8 @@ function AuthenticationForm() {
         });
         authAPI.authLogIn(data).then(responce => {
             const { data } = responce;
+            const { token } = data;
+            localStorage.setItem('token', JSON.stringify(token));
             dispatch(logIn(data));
             navigate("/todos_page", { replace: true });
             return responce.data
@@ -88,7 +90,7 @@ function AuthenticationForm() {
             }
         }
         )
-    }
+    };
 
     const showAlert = (text) => {
         dispatch(alertText(text));
@@ -96,7 +98,7 @@ function AuthenticationForm() {
         setTimeout(() => {
             dispatch(modalShow(isShow));
         }, 3000);
-    }
+    };
 
     return (
         <>
@@ -144,8 +146,6 @@ function AuthenticationForm() {
                 <Modal.Body className='alert_message'>{message}</Modal.Body>
             </Modal>
         </>
-
-
     )
 
 }

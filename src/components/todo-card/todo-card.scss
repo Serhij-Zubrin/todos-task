@@ -5,4 +5,7 @@
     margin-bottom: 5px;
     border-radius: 5px;
     box-shadow: 4px 4px 10px #bdbdbd, 4px 4px 10px #ffffff;
+    .todo_btn:not(:last-child) {
+        margin-right: 10px;
+    }
 }

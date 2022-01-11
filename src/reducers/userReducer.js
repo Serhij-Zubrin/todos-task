@@ -4,6 +4,7 @@ const initial_state = {
     email: '',
     id: '',
     isPassword: false,
+    token: '',
     isAuth: false
 }
 
