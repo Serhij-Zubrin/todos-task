@@ -1,15 +1,65 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { modalShow } from '../../../actions/modal'
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
+import { createTodo } from '../../../asyncAction/todosAction'
 
 import './todo-create.scss'
 
 function TodoCreate(props) {
     const dispatch = useDispatch()
-    console.log(props);
+    const [formValid, setFormValid] = useState(false);
+    const [title, setTitle] = useState('');
+    const [titleError, setTitleError] = useState('Value longer than 5 characters')
+    const [description, setDescription] = useState('')
+    const [descriptionError, setDescriptionError] = useState('Value longer than 5 characters')
+
+
+    useEffect(() => {
+        if (titleError || descriptionError) {
+            setFormValid(false)
+        } else {
+            setFormValid(true)
+        }
+    }, [title, description]);
+
+    const titleHandler = (e) => {
+        setTitle(e.target.value);
+        if (e.target.value.length <= 4) {
+            setTitleError('Value longer than 5 characters');
+            if (e.target.value === '') {
+                setTitleError("Value  can't be empty");
+            }
+        } else {
+            setTitleError('');
+        }
+    }
+
+    const descriptionHandler = (e) => {
+        setDescription(e.target.value);
+        if (e.target.value.length <= 4) {
+            setDescriptionError('Value longer than 5 characters');
+            if (e.target.value === '') {
+                setDescriptionError("Value  can't be empty");
+            }
+        } else {
+            setDescriptionError('');
+        }
+    }
+
+    const handleSubminForm = (e) => {
+        console.log(1);
+        let body = {
+            "title": title,
+            "description": description
+        }
+        dispatch(createTodo(body))
+        dispatch(modalShow({ isShow: !props.show, todoBtn: '' }))
+    }
+
     return (
         <>
             <Modal
@@ -28,29 +78,29 @@ function TodoCreate(props) {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group className="mb-2">
+                        <Form.Group className="mb-4 form_group">
                             <Form.Label>Title</Form.Label>
-                            <Form.Control type="text" placeholder="Enter title" defaultValue='' />
+                            <Form.Control type="text" placeholder="Enter title" defaultValue={title}
+                                onChange={(e) => titleHandler(e)}
+                            />
+                            <p className='input_error'>{titleError}</p>
                         </Form.Group>
-                        <Form.Group className="mb-2" >
+                        <Form.Group className="mb-3 form_group" >
                             <Form.Label>Description </Form.Label>
-                            <Form.Control type="text" placeholder="Enter description" defaultValue='' />
-                        </Form.Group>
-                        <Form.Group className="mb-2">
-                            <Form.Label>Background color </Form.Label>
-                            <Form.Select aria-label="Default select example">
-                                <option value="white">white</option>
-                                <option value="bisque">bisque</option>
-                                <option value="aquamarine">aquamarine</option>
-                                <option value="cornflowerblue">cornflowerblue</option>
-                                <option value="chocolate">chocolate</option>
-                                <option value="fuchsia">fuchsia</option>
-                            </Form.Select>
+                            <Form.Control type="text" placeholder="Enter description" defaultValue={description}
+                                onChange={(e) => descriptionHandler(e)}
+                            />
+                            <p className='input_error'>{descriptionError}</p>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" >Save</Button>
+                    <button
+                        className="btn btn-primary"
+                        onClick={(e) => handleSubminForm(e)}
+                        variant="primary"
+                        disabled={!formValid}
+                    >Save</button>
                 </Modal.Footer>
             </Modal>
         </>

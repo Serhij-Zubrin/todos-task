@@ -16,7 +16,16 @@ export const authAPI = {
 }
 
 export const todosAPI = {
-    async getTodos() {
+    async setTodos() {
         return await instance.get(`todos`, header)
     },
+
+    async addTodo(body) {
+        return await instance.post(`todos`, body, header)
+    },
+
+    async deleteTodo(id) {
+        return await instance.delete(`todos?id=${id}`, header)
+    },
+
 }

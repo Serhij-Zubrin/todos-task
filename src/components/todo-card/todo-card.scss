@@ -8,4 +8,22 @@
     .todo_btn:not(:last-child) {
         margin-right: 10px;
     }
+    .btn-outline-success {
+        background-color: #198754;
+        color: white;
+        transition: all 0.4s linear;
+    }
+    .btn-outline-success:hover {
+        background-color: white;
+        color: #198754;
+    }
+    .btn-outline-danger {
+        background-color: #dc3545;
+        color: white;
+        transition: all 0.4s linear;
+    }
+    .btn-outline-danger:hover {
+        background-color: white;
+        color: #dc3545;
+    }
 }

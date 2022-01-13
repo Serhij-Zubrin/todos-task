@@ -1,4 +1,13 @@
 .todo-page {
+    flex-wrap: wrap;
     height: 100vh;
     background-image: url("../../images/background_todos.jpg");
+
+    .todos_container {
+        min-width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: calc(100% - 130px);
+    }
 }

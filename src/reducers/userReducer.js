@@ -1,14 +1,16 @@
-import { LOG_IN, LOG_OUT } from "../constants/action-constants"
+import { LOG_IN, LOG_OUT, LOG_ERROR, LOG_ERROR_CLEAR } from "../constants/action-constants"
 
-const initial_state = {
+const initial_state_user = {
     email: '',
     id: '',
-    isPassword: false,
     token: '',
-    isAuth: false
+    isPassword: false,
+    isAuth: false,
+    errorMessage: '',
+    errorShow: false,
 }
 
-export const userReducer = (state = initial_state, action) => {
+export const userReducer = (state = initial_state_user, action) => {
     switch (action.type) {
         case LOG_IN:
             return {
@@ -16,12 +18,29 @@ export const userReducer = (state = initial_state, action) => {
                 ...action.payload,
                 isAuth: true
             }
+
         case LOG_OUT:
             return {
                 ...state,
-                ...action.payload,
+                email: initial_state_user.email,
+                id: initial_state_user.id,
+                isPassword: initial_state_user.isPassword,
+                token: initial_state_user.token,
                 isAuth: false
             }
+        case LOG_ERROR:
+            return {
+                ...state,
+                errorMessage: action.payload,
+                errorShow: true
+            }
+        case LOG_ERROR_CLEAR:
+            return {
+                ...state,
+                errorMessage: initial_state_user.errorMessage,
+                errorShow: false
+            }
+
         default:
             return state
     }

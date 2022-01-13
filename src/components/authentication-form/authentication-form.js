@@ -1,21 +1,15 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { Form, Modal } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
-import { authAPI } from '../../api/api'
-import { modalShow } from '../../actions/modal'
-import { logIn } from '../../actions/profile'
-import { alertText } from '../../actions/alertAction'
+import { loginUser } from '../../asyncAction/useActions'
 
 import './authentication-form.scss'
 
 function AuthenticationForm() {
     const state = useSelector(state => state);
-    const { modalReducer: { isShow } } = state;
-    const { alertTextReducer: { message } } = state
+    const { userReducer: { errorMessage, errorShow } } = state
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailDirty, setEmailDirty] = useState(false);
@@ -71,38 +65,12 @@ function AuthenticationForm() {
             email: email,
             password: password,
         });
-        authAPI.authLogIn(data).then(responce => {
-            const { data } = responce;
-            const { token } = data;
-            localStorage.setItem('token', JSON.stringify(token));
-            dispatch(logIn(data));
-            navigate("/todos_page", { replace: true });
-            return responce.data
-        }).catch(error => {
-            if (error.responce) {
-                console.log(error.responce.data);
-                console.log(error.responce.status);
-            } else if (error.request) {
-                let message = JSON.parse(error.request.response);
-                showAlert(message);
-            } else {
-                console.log('Error', error.message);
-            }
-        }
-        )
-    };
-
-    const showAlert = (text) => {
-        dispatch(alertText(text));
-        dispatch(modalShow(!isShow));
-        setTimeout(() => {
-            dispatch(modalShow(isShow));
-        }, 3000);
+        dispatch(loginUser(data))
     };
 
     return (
         <>
-            <Form className='authentication_block ' onSubmit={handleFormSubmit} >
+            <Form className='authentication_block ' onSubmit={(e) => handleFormSubmit(e)} >
                 <h3 className='authentication_title'>Sing In</h3>
                 <div className='authentication_form'>
                     <Form.Group className="mb-4 form_group" controlId="formBasicEmail">
@@ -140,10 +108,10 @@ function AuthenticationForm() {
             </Form>
             <Modal
                 size="sm"
-                show={isShow}
+                show={errorShow}
                 aria-labelledby="example-modal-sizes-title-sm"
             >
-                <Modal.Body className='alert_message'>{message}</Modal.Body>
+                <Modal.Body className='alert_message'>{errorMessage}</Modal.Body>
             </Modal>
         </>
     )

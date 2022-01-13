@@ -9,7 +9,10 @@ function TodosPage() {
     return (
         <div className='todo-page'>
             <Header />
-            <TodosTabel />
+            <div className='todos_container'>
+                <TodosTabel />
+            </div>
+
         </div>
     )
 }

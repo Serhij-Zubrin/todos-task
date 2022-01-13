@@ -1,14 +1,13 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import { Button, Toast } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
-import { logOut } from '../../actions/profile'
+import { logoutUser } from '../../asyncAction/useActions'
 
 import './header.scss'
 
 function Header() {
     const state = useSelector(state => state);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const dispatch = useDispatch();
     const { userReducer: { email } } = state;
 
@@ -18,8 +17,7 @@ function Header() {
             id: '',
             isPassword: false,
         }
-        dispatch(logOut(data));
-        navigate("/", { replace: true });
+        dispatch(logoutUser(data));
     }
     return (
         <div div className='header' >

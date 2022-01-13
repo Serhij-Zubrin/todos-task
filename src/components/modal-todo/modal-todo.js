@@ -7,11 +7,7 @@ function ModalTodo() {
     const state = useSelector(state => state);
     const { modalReducer: { isShow, todoBtn } } = state;
 
-    console.log(state);
-    console.log(todoBtn);
-
     const сhoiceModal = (btn) => {
-        console.log(btn);
         switch (btn) {
             case 'create':
                 return true;

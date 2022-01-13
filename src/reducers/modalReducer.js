@@ -5,6 +5,7 @@ const initial_state = {
     todoBtn: ""
 }
 
+//TODO  Ппереробити показ модального вікна
 export const modalReducer = (state = initial_state, action) => {
     switch (action.type) {
         case MODAL_SHOW:
