@@ -38,7 +38,6 @@ export const todoReducer = (state = initial_state, action) => {
                 ...state,
             }
 
-        //TODO Write snippet
         case TODO_ISFETCHING:
             return {
                 ...state,

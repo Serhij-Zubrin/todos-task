@@ -14,14 +14,15 @@ import ProgressList from '../todos-list/progress-list'
 import ErrorIndicator from '../error-indicator/error-indicator'
 
 import './todos-tabel.scss'
+import Spinner from '../ui/spinner'
 
 function TodosTabel() {
     const state = useSelector(state => state);
     const dispatch = useDispatch();
     const { modalReducer: { isShow } } = state;
-    const { todoReducer: { errorShow, errorNetwork, errorMessage } } = state;
+    const { todoReducer: { errorShow, errorNetwork, errorMessage, isFetching } } = state;
     const createBtn = useRef();
-
+    console.log(isFetching);
 
     useEffect(() => {
         dispatch(setTodos())
@@ -70,6 +71,7 @@ function TodosTabel() {
             <Button variant="danger" className='todo-add' ref={createBtn} data-btn="create" onClick={(e) => dispatchModal(e)}>
                 <FontAwesomeIcon icon={faPlusCircle} className='btn_icon'></FontAwesomeIcon>
             </Button>
+            {isFetching ? <Spinner /> : null}
         </div>
     )
 }

@@ -22,7 +22,6 @@ export const todoChange = () => ({
     type: TODO_CHANGE,
 })
 
-
 export const todosIsFetching = (payload) => ({
     type: TODO_ISFETCHING,
     payload,

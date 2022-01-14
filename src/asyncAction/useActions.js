@@ -1,15 +1,17 @@
 import { authAPI } from "../api/api"
 import { logError, logErrorClear, logOut } from '../actions/profile'
 import { errorNetworkHide, errorNetworkShow } from "../actions/todo"
+import { todosIsFetching } from "../actions/todo"
 
 
 export const loginUser = (data) => async (dispatch) => {
     try {
+        dispatch(todosIsFetching(true))
         const response = await authAPI.authLogIn(data)
         const { token } = response.data;
         localStorage.setItem('token', JSON.stringify(token));
         dispatch({ type: 'LOG_IN', payload: response.data })
-        // dispatch(logIn(response.data))
+        dispatch(todosIsFetching(false))
     } catch (error) {
         console.log(error.toJSON())
         console.log(error.request);
@@ -19,6 +21,7 @@ export const loginUser = (data) => async (dispatch) => {
         } else {
             message = JSON.parse(error.request.response).message;
         }
+        dispatch(todosIsFetching(false))
         dispatch(logError(message));
         setTimeout(() => {
             dispatch(logErrorClear());
@@ -28,9 +31,11 @@ export const loginUser = (data) => async (dispatch) => {
 
 export const logoutUser = (data) => async (dispatch) => {
     try {
+        dispatch(todosIsFetching(true))
         await authAPI.authLogOut(data)
         localStorage.removeItem('token');
         dispatch(logOut())
+        dispatch(todosIsFetching(false))
     } catch (error) {
         let message = 'Undefined error';
         if (error.request.status === 0) {
@@ -38,6 +43,7 @@ export const logoutUser = (data) => async (dispatch) => {
         } else {
             message = JSON.parse(error.request.response).message;
         }
+        dispatch(todosIsFetching(false))
         dispatch(errorNetworkShow(message));
         setTimeout(() => {
             dispatch(errorNetworkHide());
