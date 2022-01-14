@@ -1,6 +1,6 @@
 import { authAPI } from "../api/api"
 import { logError, logErrorClear, logOut } from '../actions/profile'
-import { logIn } from "../actions/profile"
+import { errorNetworkHide, errorNetworkShow } from "../actions/todo"
 
 
 export const loginUser = (data) => async (dispatch) => {
@@ -11,8 +11,15 @@ export const loginUser = (data) => async (dispatch) => {
         dispatch({ type: 'LOG_IN', payload: response.data })
         // dispatch(logIn(response.data))
     } catch (error) {
-        let err = JSON.parse(error.request.response);
-        dispatch(logError(err.message));
+        console.log(error.toJSON())
+        console.log(error.request);
+        let message = 'Undefined error';
+        if (error.request.status === 0) {
+            message = error.message;
+        } else {
+            message = JSON.parse(error.request.response).message;
+        }
+        dispatch(logError(message));
         setTimeout(() => {
             dispatch(logErrorClear());
         }, 3000);
@@ -25,10 +32,15 @@ export const logoutUser = (data) => async (dispatch) => {
         localStorage.removeItem('token');
         dispatch(logOut())
     } catch (error) {
-        let err = JSON.parse(error.request.response);
-        dispatch(logError(err.message));
+        let message = 'Undefined error';
+        if (error.request.status === 0) {
+            message = error.message;
+        } else {
+            message = JSON.parse(error.request.response).message;
+        }
+        dispatch(errorNetworkShow(message));
         setTimeout(() => {
-            dispatch(logErrorClear());
-        }, 3000);
+            dispatch(errorNetworkHide());
+        }, 5000);
     }
 }

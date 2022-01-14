@@ -1,27 +1,26 @@
 import React from 'react'
-import { useRef, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { modalShow } from '../../actions/modal'
+import { useRef } from 'react'
+import { useDispatch } from 'react-redux'
+import { modalHide } from '../../actions/modal'
 import { Card, Button } from 'react-bootstrap'
-import { deleteTodo, setTodos } from '../../asyncAction/todosAction'
+import { deleteTodo, selectTodo } from '../../asyncAction/todosAction'
 
 import './todo-card.scss'
 
 function TodoCard(props) {
-    const state = useSelector(state => state);
     const dispatch = useDispatch();
-    const { modalReducer: { isShow } } = state;
     const changaBtn = useRef()
 
 
     const { item: { _id, color, description, title } } = props
-    const dispatchModal = (e) => {
-        let data = {
+
+    const handleSelectTodo = (e) => {
+        let dataShow = {
             isShow: true,
             todoBtn: changaBtn.current.dataset.btn
         }
-        dispatch(modalShow(data));
-        console.log(e.target.parentNode.id);
+        const id = e.target.parentNode.id;
+        dispatch(selectTodo(id, dataShow))
     }
 
     const removeToDo = (e) => {
@@ -30,10 +29,10 @@ function TodoCard(props) {
     }
 
     return (
-        <div className='todo_card'
+        <div className='todo_card border border-secondary'
             style={{ backgroundColor: `${color}` }}
             id={_id}
-            onClick={() => dispatch(modalShow(!isShow))}
+            onClick={() => dispatch(modalHide())}
         >
             <Card.Title>{title}</Card.Title>
             <Card.Text>
@@ -42,7 +41,7 @@ function TodoCard(props) {
             <Button
                 variant="outline-success"
                 className='change_btn todo_btn'
-                onClick={(e) => dispatchModal(e)}
+                onClick={(e) => handleSelectTodo(e)}
                 data-btn="change"
                 ref={changaBtn}>Change</Button>
             <Button

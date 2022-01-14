@@ -1,11 +1,10 @@
 import React from 'react'
-import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import sortTodosArray from '../../../util/sortArray.js'
 
 import TodoCard from '../../todo-card/todo-card'
 
-function ProgressList() {
+const ProgressList = () => {
     const state = useSelector(state => state);
     const { todoReducer: { todos } } = state;
 

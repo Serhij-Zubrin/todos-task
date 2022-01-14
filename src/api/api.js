@@ -28,4 +28,11 @@ export const todosAPI = {
         return await instance.delete(`todos?id=${id}`, header)
     },
 
+    async changeTodo(id, body) {
+        return await instance.put(`todos?id=${id}`, body, header)
+    },
+
+    async chooseTodo(id) {
+        return await instance.get(`todos?id=${id}`, header)
+    },
 }

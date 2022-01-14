@@ -19,15 +19,23 @@
         background-color: rgba(255, 255, 255, 0.336);
         margin: 10px;
         overflow: hidden;
-        box-shadow: 7px 7px 14px #bdbdbd, -7px -7px 14px #ffffff;
+        box-shadow: 4px 4px 10px #bdbdbd, 4px 4px 10px #ffffff;
         min-height: 100%;
-        h2 {
+        .title-status {
+            font-weight: bold;
             text-transform: capitalize;
             text-align: center;
+            background-color: grey;
+            margin: 0;
+            padding: 10px 0;
+            box-shadow: 7px 7px 14px #ffffff, -7px -7px 14px #bdbdbd;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
         }
         .status_body {
             height: auto;
             overflow: auto;
+            padding: 20px 10px;
         }
         ::-webkit-scrollbar {
             width: 10px;
@@ -46,13 +54,25 @@
     }
     .error_container {
         position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         bottom: 100px;
-        width: 200px;
+        min-width: 200px;
+        max-width: 250px;
         height: 100px;
         border-radius: 5px;
         background-color: #868585cc;
         box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.5);
         transition: right 1s linear;
+        border: 1px solid rgb(94, 0, 0);
+        .error_todo {
+            margin: 0;
+            span {
+                text-align: center;
+                font-weight: bold;
+            }
+        }
     }
     .show {
         right: 30px;

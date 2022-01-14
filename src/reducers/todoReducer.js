@@ -1,13 +1,12 @@
-import { TODOS_INIT, TODO_SELECT, TODO_ISFETCHING, TODO_ERROR_ADD, TODO_ERROR_CLEAR, TODO_DELETE, TODO_MODAL_MESSAGE } from "../constants/action-constants";
+import { TODOS_INIT, TODO_SELECT, TODO_SELECT_CLEAR, TODO_ISFETCHING, TODO_ERROR_ADD, TODO_ERROR_CLEAR, TODO_DELETE, TODO_CHANGE, TODO_ERROR_NETWORK_SHOW, TODO_ERROR_NETWORK_HIDE } from "../constants/action-constants";
 
 const initial_state = {
     isFetching: false,
     todos: [],
-    selectTodos: {},
-    errorMessega: '',
+    selectTodo: {},
+    errorMessage: '',
     errorShow: false,
-    modalMassega: false,
-    modalShow: "hide"
+    errorNetwork: "hide"
 };
 
 
@@ -22,9 +21,18 @@ export const todoReducer = (state = initial_state, action) => {
         case TODO_SELECT:
             return {
                 ...state,
-                ...action.payload,
+                selectTodo: action.payload,
             }
 
+        case TODO_SELECT_CLEAR:
+            return {
+                ...state,
+                selectTodo: initial_state.selectTodo,
+            }
+        case TODO_CHANGE:
+            return {
+                ...state,
+            }
         case TODO_DELETE:
             return {
                 ...state,
@@ -49,11 +57,18 @@ export const todoReducer = (state = initial_state, action) => {
                 errorShow: false,
             }
 
-
-        case TODO_MODAL_MESSAGE:
+        case TODO_ERROR_NETWORK_SHOW:
             return {
                 ...state,
-                errorShow: true,
+                errorNetwork: " error_container show",
+                errorMessage: action.payload
+            }
+
+        case TODO_ERROR_NETWORK_HIDE:
+            return {
+                ...state,
+                errorNetwork: " error_container hide",
+                errorMessage: initial_state.errorMessage
             }
 
         default:

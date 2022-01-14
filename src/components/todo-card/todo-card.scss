@@ -1,11 +1,11 @@
 .todo_card {
     background-color: fuchsia;
     height: auto;
-    padding: 10px;
-    margin-bottom: 5px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
     border-radius: 5px;
     box-shadow: 4px 4px 10px #bdbdbd, 4px 4px 10px #ffffff;
-    .todo_btn:not(:last-child) {
+    bor .todo_btn:not(:last-child) {
         margin-right: 10px;
     }
     .btn-outline-success {

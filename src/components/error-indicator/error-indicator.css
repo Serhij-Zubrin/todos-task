@@ -10,12 +10,14 @@
 .error-indicator p{
     display: block;
     text-align: center;
-    color:white;
-    font-size: calc(14px + 1vw);
+    color:rgb(41, 41, 41);
+    font-size: calc(12px + 1vw);
+    line-height: 1;
 }
 .boom{
-    margin-top: 10px;
+    margin-top: 15px;
+    font-weight: 800;
 }
 .error-indicator img{
-    max-width: 50px;
+    max-width: 80px;
 }

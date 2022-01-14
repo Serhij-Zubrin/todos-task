@@ -14,6 +14,9 @@ const ErrorIndicator = () => {
             <p>
                 (but we already sent droids to fix it)
             </p>
+            <p>
+                <strong>Go to the app later!!!</strong>
+            </p>
         </div>
     )
 }

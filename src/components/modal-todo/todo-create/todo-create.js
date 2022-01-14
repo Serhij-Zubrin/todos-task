@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { modalShow } from '../../../actions/modal'
+import { modalShow, modalHide } from '../../../actions/modal'
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
 import { createTodo } from '../../../asyncAction/todosAction'
 
 import './todo-create.scss'
 
-function TodoCreate(props) {
+const TodoCreate = (props) => {
     const dispatch = useDispatch()
     const [formValid, setFormValid] = useState(false);
     const [title, setTitle] = useState('');
@@ -51,7 +51,6 @@ function TodoCreate(props) {
     }
 
     const handleSubminForm = (e) => {
-        console.log(1);
         let body = {
             "title": title,
             "description": description
@@ -72,7 +71,7 @@ function TodoCreate(props) {
             >
                 <Modal.Header>
                     <Modal.Title>Todo</Modal.Title>
-                    <Button variant="danger" onClick={() => dispatch(modalShow({ isShow: !props.show, todoBtn: '' }))}>
+                    <Button variant="danger" onClick={() => dispatch(modalHide())}>
                         <FontAwesomeIcon icon={faWindowClose} ></FontAwesomeIcon>
                     </Button>
                 </Modal.Header>

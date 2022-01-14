@@ -6,8 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { modalShow } from '../../actions/modal'
 import { setTodos } from '../../asyncAction/todosAction'
-import { todosAPI } from '../../api/api'
-import { TodosInit } from '../../actions/todo'
 
 import ModalTodo from '../modal-todo'
 import DoneList from '../todos-list/done-list'
@@ -21,7 +19,7 @@ function TodosTabel() {
     const state = useSelector(state => state);
     const dispatch = useDispatch();
     const { modalReducer: { isShow } } = state;
-    const { todoReducer: { errorShow } } = state;
+    const { todoReducer: { errorShow, errorNetwork, errorMessage } } = state;
     const createBtn = useRef();
 
 
@@ -62,10 +60,10 @@ function TodosTabel() {
                 </Card.Body>
             </Card>
             {isShow ? <ModalTodo /> : null}
-            <div className='error_container hide'>
+            <div className={errorNetwork} >
                 <p className='error_todo'>
-                    <span>
-
+                    <span className='font-monospace '>
+                        {errorMessage}
                     </span>
                 </p>
             </div>

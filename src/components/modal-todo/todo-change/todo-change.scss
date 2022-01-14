@@ -1,0 +1,10 @@
+.form_group {
+    position: relative;
+    .input_error {
+        position: absolute;
+        font-size: 12px;
+        font-weight: bold;
+        left: 10px;
+        color: red;
+    }
+}
