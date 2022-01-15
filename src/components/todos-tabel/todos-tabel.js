@@ -22,7 +22,6 @@ function TodosTabel() {
     const { modalReducer: { isShow } } = state;
     const { todoReducer: { errorShow, errorNetwork, errorMessage, isFetching } } = state;
     const createBtn = useRef();
-    console.log(isFetching);
 
     useEffect(() => {
         dispatch(setTodos())

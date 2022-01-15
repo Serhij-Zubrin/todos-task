@@ -7,8 +7,8 @@ import './auth.scss'
 
 function Auth() {
     const state = useSelector(state => state);
-
     const { todoReducer: { isFetching } } = state;
+
     return (
         <div className='auth'>
             <AuthenticationForm />

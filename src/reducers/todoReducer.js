@@ -9,7 +9,6 @@ const initial_state = {
     errorNetwork: "hide"
 };
 
-
 export const todoReducer = (state = initial_state, action) => {
     switch (action.type) {
         case TODOS_INIT:
